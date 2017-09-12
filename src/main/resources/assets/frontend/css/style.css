@@ -1,0 +1,47 @@
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+h1 {
+    color: #5046a0;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+a {
+    color: blue;
+    text-decoration: none;
+}
+
+.footer {
+    margin-top: 20px;
+    font-size: 15px;
+    color: gray;
+}
+
+.deletebutton {
+    margin-left: 20px;
+}
+
+.editbutton {
+    margin-left: 20px;
+}
+
+.updatebutton {
+    display: initial;
+    visibility: hidden;
+}
+
+.resetbutton {
+    display: initial;
+    visibility: hidden;
+}
