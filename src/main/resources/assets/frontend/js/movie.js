@@ -1,12 +1,16 @@
 
-let moviesPromise = loadMovie(getIdFromUrl());
-
-moviesPromise.then(movie => {
-    displayMovie(movie);
-});
+const apiMoviesUrl = '/api/movies/';
 
 homePageRedirect();
+loadAndDisplayMovie();
 
+
+function loadAndDisplayMovie() {
+
+    loadMovie(getIdFromUrl()).then(movie => {
+        displayMovie(movie);
+    });
+}
 
 /** Goes to Home page when home button is clicked */
 function homePageRedirect() {
@@ -21,11 +25,8 @@ function homePageRedirect() {
 
 function loadMovie(movieid) {
 
-    let url = '/api/movies/' + movieid;
-
-    // We return the promise that fetch() gives us
-    return fetch(url)
-        .then(response => response.json())
+    return axios.get(apiMoviesUrl + movieid)
+        .then(response => response.data)
         .catch(error => {
             console.log("AJAX request finished with an error :(");
             console.error(error);
@@ -44,10 +45,14 @@ function displayMovie(movie) {
 
     let html = "";
 
-    html += movie.title + "<br>";
+    html += "<h2>" + movie.title + "</h2>";
 
-    html += movie.director;
+    html += "<p>" + movie.director + "</p>";
 
-    const resultDiv = document.getElementById("result");
+    html += "<p>(" + movie.year + ")</p>";
+
+    html += '<img class=cover src=' + movie.cover + '>';
+
+    const resultDiv = document.getElementById("result2");
     resultDiv.innerHTML = html;
 }

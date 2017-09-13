@@ -5,16 +5,18 @@ public class Movie {
     private int id;
     private String title;
     private String director;
+    private String cover;
     private int year;
 
     public Movie() {
         //dropwizard constructor for POST
     }
 
-    public Movie(int id, String title, String director, int year) {
+    public Movie(int id, String title, String director, String cover, int year) {
         this.id = id;
         this.title = title;
         this.director = director;
+        this.cover = cover;
         this.year = year;
     }
 
@@ -54,6 +56,14 @@ public class Movie {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 }
 

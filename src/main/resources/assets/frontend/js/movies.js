@@ -9,8 +9,7 @@ function loadAndDisplayMovies() {
     loadMovies().then(movies => {
         displayMovies(movies);
         deleteMovie();
-        editMovie();
-        //updateMovie();
+        editAndUpdateMovie();
         resetForm();
     });
 }
@@ -72,6 +71,7 @@ function displayMovies(movies) {
     resultDiv.innerHTML = html;
 }
 
+/** Deletes a movie when you click on its delete button */
 function deleteMovie() {
 
     $('.deletebutton').click(function() {
@@ -90,27 +90,23 @@ function deleteMovie() {
     });
 }
 
-function editMovie() {
+/** Edits a movie info and updates it when clicking the update button */
+function editAndUpdateMovie() {
 
     $('.editbutton').click(function() {
 
         let movieid = $(this).val();
+
         let updateButton = document.querySelector(".updatebutton");
-        updateButton.style.visibility = "visible";
         updateButton.style.display = "initial";
         $('.updatebutton').attr('value', movieid);
-        document.querySelector(".resetbutton").style.visibility = "visible";
+
         document.querySelector(".resetbutton").style.display = "initial";
 
         let addButton = document.querySelector("#addbutton");
         addButton.style.display = "none";
 
     });
-
-    updateMovie();
-}
-
-function updateMovie() {
 
     $('.updatebutton').click(function() {
 
@@ -141,9 +137,13 @@ function updateMovie() {
         document.getElementById("title").value = "";
         document.getElementById("director").value = "";
         document.getElementById("year").value = "";
+        document.getElementById("cover").value = "";
     });
+
 }
 
+/** Resets the form inputs values and shows again the 'add movie' button
+ *  Also goes back when you click the edit button and you dont want to edit */
 function resetForm() {
 
     $('.resetbutton').click(function() {
@@ -151,6 +151,7 @@ function resetForm() {
         document.getElementById("title").value = "";
         document.getElementById("director").value = "";
         document.getElementById("year").value = "";
+        document.getElementById("cover").value = "";
         document.getElementById("addbutton").style.display = "initial";
         document.querySelector(".updatebutton").style.display = "none";
         document.querySelector(".resetbutton").style.display = "none";

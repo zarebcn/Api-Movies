@@ -1,7 +1,6 @@
 package com.zarebcn.api.movies;
 
 import com.zarebcn.api.movies.controller.MovieApi;
-//import com.zarebcn.api.movies.controller.BookController;
 import com.zarebcn.api.movies.service.MovieService;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
@@ -32,7 +31,6 @@ public class MyApp extends Application<MyAppConfig> {
 
         MovieService movieService = new MovieService();
 
-       //env.jersey().register(new MovieController(movieService));
         env.jersey().register(new MovieApi(movieService));
     }
 }
