@@ -10,7 +10,7 @@ function loadAndDisplayMovies() {
         displayMovies(movies);
         deleteMovie();
         editAndUpdateMovie();
-        resetForm();
+        exitEditMode();
     });
 }
 
@@ -24,10 +24,17 @@ function setupMovieForm() {
         const movie = {
             title: $('#title').val(),
             director: $('#director').val(),
-            year: parseInt($('#year').val())
+            year: parseInt($('#year').val()),
+            cover: $('#cover').val()
         };
 
-        if ($('#title').val() && $('#director').val() && $('#year').val()) {
+        let title = document.getElementById("title").value;
+        let director = document.getElementById("director").value;
+        let year = document.getElementById("year").value;
+        let cover = document.getElementById("cover").value;
+
+        if ($('#title').val() && $('#director').val() && $('#year').val() && $('#cover')
+            && isNaN(director) === true && isNaN(cover) === true && isNaN(year) === false) {
 
             axios
                 .post(apiMoviesUrl, movie)
@@ -37,8 +44,10 @@ function setupMovieForm() {
                     loadAndDisplayMovies(); // to refresh list
                 })
                 .catch(error => console.error("Error adding movie!", error));
-        }
 
+           clearInputs();
+        }
+        clearInputs();
     });
 }
 
@@ -86,7 +95,6 @@ function deleteMovie() {
                 loadAndDisplayMovies(); // to refresh list
             })
             .catch(error => console.error("Error deleting movie!", error));
-
     });
 }
 
@@ -101,11 +109,10 @@ function editAndUpdateMovie() {
         updateButton.style.display = "initial";
         $('.updatebutton').attr('value', movieid);
 
-        document.querySelector(".resetbutton").style.display = "initial";
+        document.querySelector(".backbutton").style.display = "initial";
 
         let addButton = document.querySelector("#addbutton");
         addButton.style.display = "none";
-
     });
 
     $('.updatebutton').click(function() {
@@ -113,12 +120,19 @@ function editAndUpdateMovie() {
         const movie = {
             title: $('#title').val(),
             director: $('#director').val(),
-            year: parseInt($('#year').val())
+            year: parseInt($('#year').val()),
+            cover: $('#cover').val()
         };
 
-        const movieid = $(this).val();
+        let title = document.getElementById("title").value;
+        let director = document.getElementById("director").value;
+        let year = document.getElementById("year").value;
+        let cover = document.getElementById("cover").value;
 
-        if ($('#title').val() && $('#director').val() && $('#year').val()) {
+        if ($('#title').val() && $('#director').val() && $('#year').val() && $('#cover')
+            && isNaN(director) === true && isNaN(cover) === true && isNaN(year) === false) {
+
+            const movieid = $(this).val();
 
             axios
                 .put(apiMoviesUrl + movieid, movie)
@@ -131,29 +145,29 @@ function editAndUpdateMovie() {
 
             document.getElementById("addbutton").style.display = "initial";
             document.querySelector(".updatebutton").style.display = "none";
-            document.querySelector(".resetbutton").style.display = "none";
+            document.querySelector(".backbutton").style.display = "none";
         }
-
-        document.getElementById("title").value = "";
-        document.getElementById("director").value = "";
-        document.getElementById("year").value = "";
-        document.getElementById("cover").value = "";
+        clearInputs();
     });
-
 }
 
-/** Resets the form inputs values and shows again the 'add movie' button
- *  Also goes back when you click the edit button and you dont want to edit */
-function resetForm() {
+/** Exits edit mode and clears the inputs */
+function exitEditMode() {
 
-    $('.resetbutton').click(function() {
+    $('.backbutton').click(function() {
 
-        document.getElementById("title").value = "";
-        document.getElementById("director").value = "";
-        document.getElementById("year").value = "";
-        document.getElementById("cover").value = "";
+        clearInputs();
         document.getElementById("addbutton").style.display = "initial";
         document.querySelector(".updatebutton").style.display = "none";
-        document.querySelector(".resetbutton").style.display = "none";
+        document.querySelector(".backbutton").style.display = "none";
     });
+}
+
+/** Clears the inputs */
+function clearInputs() {
+
+    document.getElementById("title").value = "";
+    document.getElementById("director").value = "";
+    document.getElementById("year").value = "";
+    document.getElementById("cover").value = "";
 }
