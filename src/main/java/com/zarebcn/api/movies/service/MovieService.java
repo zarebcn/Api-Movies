@@ -69,10 +69,6 @@ public class MovieService {
 
     public Movie editMovie(int id, Movie movie) {
 
-        movie.setTitle(movie.getTitle());
-        movie.setDirector(movie.getDirector());
-        movie.setYear(movie.getYear());
-        movie.setCover(movie.getCover());
         movie.setId(id);
 
         movies.put(id, movie);
