@@ -1,10 +1,10 @@
 package com.zarebcn.api.movies.service;
 
+import com.zarebcn.api.movies.model.Movie;
 import com.zarebcn.api.movies.model.Rental;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class RentalService {
 
@@ -20,6 +20,28 @@ public class RentalService {
     public Collection<Rental> viewRentals() {
 
         return rentals.values();
+    }
+
+    public Collection<Rental> getRentalsByUserId(int id) {
+
+        List<Rental> provisional = new ArrayList<>(rentals.values());
+        Collection<Rental> rentalsByUser;
+        List<Rental> provisional2 = new ArrayList<>();
+        Rental rental = new Rental();
+
+        for (int i = 0; i < provisional.size(); i++) {
+
+            rental = provisional.get(i);
+
+            if (rental.getUserid()  == id) {
+
+                provisional2.add(rental);
+            }
+        }
+
+        rentalsByUser = provisional2;
+
+       return rentalsByUser;
     }
 
     public Rental getById(int id) {

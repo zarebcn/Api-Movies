@@ -38,7 +38,7 @@ function getIdFromUrl() {
 
     let url = location.href;
     let equalSignIndex = url.indexOf("=");
-    return url.substring(equalSignIndex + 1, url.length);
+    return parseInt(url.substring(equalSignIndex + 1, url.length));
 }
 
 function displayMovie(movie) {
@@ -95,13 +95,15 @@ function rentMovie(movie) {
         rentButton.style.display = "initial";
     }
 
+
+
     $(".okbutton").click(function () {
 
-        const input = parseInt($('.rentinput').val());
+        const input = parseInt(document.querySelector(".rentinput").value);
 
         const rental = {
             movieid: getIdFromUrl(),
-            userid: $('.rentinput').val(),
+            userid: input,
             movie: movie
         };
 

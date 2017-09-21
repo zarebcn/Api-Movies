@@ -7,6 +7,7 @@ loadAndDisplayMovies();
 function loadAndDisplayMovies() {
 
     loadMovies().then(movies => {
+        console.log(movies)
         displayMovies(movies);
         deleteMovie();
         editAndUpdateMovie();

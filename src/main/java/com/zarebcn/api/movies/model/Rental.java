@@ -13,12 +13,13 @@ public class Rental {
 
    }
 
-    public Rental(int movieid, int userid, int rentalid) {
+    public Rental(int movieid, int userid, Movie movie, int rentalid) {
         this.rentalid = rentalid;
         this.movieid = movieid;
         this.userid = userid;
-        MovieService movieService = new MovieService();
-        this.movie = movieService.getById(movieid);
+        //MovieService movieService = new MovieService();
+        //this.movie = movieService.getById(movieid);
+        this.movie = movie;
     }
 
     public void setMovieid(int movieid) {

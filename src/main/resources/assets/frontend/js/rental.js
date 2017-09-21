@@ -7,8 +7,10 @@ loadAndDisplayRentals();
 function loadAndDisplayRentals() {
 
     loadRentals().then(rentals => {
+        console.log(rentals);
         displayRentals(rentals);
         returnMovie(rentals);
+        viewRentalsById(rentals);
     });
 }
 
@@ -69,6 +71,8 @@ function returnMovie(rentals) {
         document.querySelector(".returninput").style.display = "initial";
         document.querySelector(".returnokbutton").style.display = "initial";
         document.querySelector(".returnbackbutton").style.display = "initial";
+        document.querySelector(".userrentals").style.display = "none";
+        document.querySelector(".userbackbutton").style.display = "none";
         returnmoviebutton.style.display = "none";
     }
 
@@ -80,7 +84,9 @@ function returnMovie(rentals) {
         document.querySelector(".returninput").style.display = "none";
         document.querySelector(".returnokbutton").style.display = "none";
         document.querySelector(".returnbackbutton").style.display = "none";
+        document.querySelector(".userrentals").style.display = "initial";
         returnmoviebutton.style.display = "initial";
+        loadAndDisplayRentals();
     }
 
     $(".returnokbutton").click(function () {
@@ -131,5 +137,52 @@ function returnMovie(rentals) {
 
             document.querySelector(".returninput").value = "";
         }
+    });
+}
+
+function viewRentalsById(rentals) {
+
+    if (rentals.length === 0) {
+        document.querySelector(".userrentals").style.display = "none";
+    }
+
+    /** Show the rentals of the selected user */
+    $('.userrentals').click(function() {
+
+        document.querySelector(".userinput").style.display = "initial";
+        document.querySelector(".userokbutton").style.display = "initial";
+        document.querySelector(".userbackbutton").style.display = "initial";
+        document.querySelector(".userrentals").style.display = "none";
+        document.querySelector(".returnmoviebutton").style.display = "none";
+    });
+
+    $('.userbackbutton').click(function() {
+
+        location.href = "http://localhost:8080/rental.html";
+    });
+
+    $('.userokbutton').click(function() {
+
+        const userInput = parseInt(document.querySelector(".userinput").value);
+        document.querySelector(".returnmoviebutton").style.display = "initial";
+        document.querySelector(".userinput").value = "";
+        document.querySelector(".userinput").style.display = "none";
+        document.querySelector(".userokbutton").style.display = "none";
+
+        if (userInput && isNaN(userInput) === false) {
+
+            console.log(userInput);
+
+            axios
+                .get("/api/rental/user/" + userInput)
+                .then(response => response.data)
+                .then(rentals => {
+                    console.log("movies rented by this user", rentals);
+                    displayRentals(rentals);
+                })
+                .catch(error => console.error("Error showing user rented movies!", error));
+
+        }
+
     });
 }

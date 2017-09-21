@@ -86,6 +86,10 @@ h1 {
     display: none;
 }
 
+.returnmoviebutton {
+    margin-top: 15px;
+}
+
 .returnbackbutton {
     margin-top: 15px;
     display: none;
@@ -98,4 +102,22 @@ h1 {
 
 .returninput {
     display: none;
+}
+
+.userinput {
+    display: none;
+}
+
+.userokbutton {
+    margin-top: 15px;
+    display: none;
+}
+
+.userbackbutton {
+    margin-top: 15px;
+    display: none;
+}
+
+.userrentals {
+    margin-top: 15px;
 }
