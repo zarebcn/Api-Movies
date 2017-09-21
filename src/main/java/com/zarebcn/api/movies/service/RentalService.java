@@ -19,8 +19,7 @@ public class RentalService {
 
     public Collection<Rental> viewRentals() {
 
-        Collection<Rental> rent = rentals.values();
-        return rent;
+        return rentals.values();
     }
 
     public Rental getById(int id) {
