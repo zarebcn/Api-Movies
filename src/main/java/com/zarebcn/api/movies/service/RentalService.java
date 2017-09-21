@@ -29,16 +29,14 @@ public class RentalService {
 
     public Rental createRental(Rental rental) {
 
+        rental.setRentalid(nextId);
         rentals.put(nextId, rental);
         nextId++;
         return rental;
     }
 
-    public Collection<Rental> returnMovie(int rentalid) {
+    public void returnMovie(int rentalid) {
 
-        Collection<Rental> pelis;
         rentals.remove(rentalid);
-        pelis = rentals.values();
-        return pelis;
     }
 }

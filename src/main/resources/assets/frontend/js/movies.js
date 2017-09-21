@@ -81,75 +81,96 @@ function displayMovies(movies) {
     resultDiv.innerHTML = html;
 }
 
-/** Deletes a movie when you click on its delete button */
+/** Deletes a movie when you click on its delete button only if the movie is available for rent */
 function deleteMovie() {
 
     $('.deletebutton').click(function() {
 
         let movieid = parseInt($(this).val());
 
-        axios
-            .delete(apiMoviesUrl + movieid)
+        axios.get(apiMoviesUrl + movieid)
             .then(response => response.data)
-            .then(deletedMovie => {
-                console.log("deleted movie");
-                loadAndDisplayMovies(); // to refresh list
+            .then(movie => {
+
+                if (movie.available) {
+
+                    axios
+                        .delete(apiMoviesUrl + movieid)
+                        .then(response => response.data)
+                        .then(deletedMovie => {
+                            console.log("deleted movie");
+                            loadAndDisplayMovies(); // to refresh list
+                        })
+                        .catch(error => console.error("Error deleting movie!", error));
+                }
             })
-            .catch(error => console.error("Error deleting movie!", error));
+            .catch(error => {
+                console.log("AJAX request finished with an error :(");
+                console.error(error);
+            });
     });
 }
 
-/** Edits a movie info and updates it when clicking the update button */
+/** Edits a movie info and updates it when clicking the update button only if the movie is not rented */
 function editAndUpdateMovie() {
-
-    let editButtons = $('.editbutton');
 
     $('.editbutton').click(function() {
 
         let movieid = $(this).val();
 
-        let updateButton = document.querySelector(".updatebutton");
-        updateButton.style.display = "initial";
-        $('.updatebutton').attr('value', movieid);
+        axios.get(apiMoviesUrl + movieid)
+            .then(response => response.data)
+            .then(movie => {
 
-        document.querySelector(".backbutton").style.display = "initial";
+                if (movie.available) {
 
-        let addButton = document.querySelector("#addbutton");
-        addButton.style.display = "none";
-    });
+                    let updateButton = document.querySelector(".updatebutton");
+                    updateButton.style.display = "initial";
 
-    $('.updatebutton').click(function() {
+                    document.querySelector(".backbutton").style.display = "initial";
 
-        const movie = {
-            title: $('#title').val(),
-            director: $('#director').val(),
-            year: parseInt($('#year').val()),
-            cover: $('#cover').val()
-        };
+                    let addButton = document.querySelector("#addbutton");
+                    addButton.style.display = "none";
 
-        let director = document.getElementById("director").value;
-        let year = document.getElementById("year").value;
-        let cover = document.getElementById("cover").value;
+                }
 
-        if ($('#title').val() && $('#director').val() && $('#year').val() && $('#cover')
-            && isNaN(director) === true && isNaN(cover) === true && isNaN(year) === false) {
+                $('.updatebutton').click(function() {
 
-            const movieid = $(this).val();
+                    const movie = {
+                        title: $('#title').val(),
+                        director: $('#director').val(),
+                        year: parseInt($('#year').val()),
+                        cover: $('#cover').val()
+                    };
 
-            axios
-                .put(apiMoviesUrl + movieid, movie)
-                .then(response => response.data)
-                .then(editedMovie => {
-                    console.log("edited movie", editedMovie);
-                    loadAndDisplayMovies(); // to refresh list
-                })
-                .catch(error => console.error("Error editing movie!", error));
+                    let director = document.getElementById("director").value;
+                    let year = document.getElementById("year").value;
+                    let cover = document.getElementById("cover").value;
 
-            document.getElementById("addbutton").style.display = "initial";
-            document.querySelector(".updatebutton").style.display = "none";
-            document.querySelector(".backbutton").style.display = "none";
-        }
-        clearInputs();
+                    if ($('#title').val() && $('#director').val() && $('#year').val() && $('#cover')
+                        && isNaN(director) === true && isNaN(cover) === true && isNaN(year) === false) {
+
+                        axios
+                            .put(apiMoviesUrl + movieid, movie)
+                            .then(response => response.data)
+                            .then(editedMovie => {
+                                console.log("edited movie", editedMovie);
+                                loadAndDisplayMovies(); // to refresh list
+                            })
+                            .catch(error => console.error("Error editing movie!", error));
+
+                        document.getElementById("addbutton").style.display = "initial";
+                        document.querySelector(".updatebutton").style.display = "none";
+                        document.querySelector(".backbutton").style.display = "none";
+                    }
+                    clearInputs();
+                });
+
+            })
+            .catch(error => {
+                console.log("AJAX request finished with an error :(");
+                console.error(error);
+            });
     });
 }
 

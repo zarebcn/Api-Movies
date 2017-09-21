@@ -101,7 +101,8 @@ function rentMovie(movie) {
 
         const rental = {
             movieid: getIdFromUrl(),
-            userid: $('.rentinput').val()
+            userid: $('.rentinput').val(),
+            movie: movie
         };
 
         if (input && isNaN(input) === false) {

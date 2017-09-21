@@ -54,9 +54,7 @@ public class MovieService {
 
         movie.setId(nextId);
         movie.setAvailable(true);
-
         movies.put(nextId, movie);
-
         nextId++;
 
         return movie;
@@ -70,9 +68,7 @@ public class MovieService {
     public Movie editMovie(int id, Movie movie) {
 
         movie.setId(id);
-
-        movie.setAvailable(movie.isAvailable());
-
+        movie.setAvailable(true);
         movies.put(id, movie);
 
         return getById(id);
@@ -80,7 +76,6 @@ public class MovieService {
 
     public Movie setRented(int id, Movie movie) {
 
-       // Movie movie = movies.get(id);
         movie.setAvailable(false);
         movies.put(id, movie);
 

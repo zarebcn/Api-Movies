@@ -35,14 +35,13 @@ function loadRentals() {
 function displayRentals(rentals) {
 
     let html = "<ul>";
-    let rentalId = 1;
 
     if (rentals.length > 0) {
 
         for (const rental of rentals) {
 
-            html += '<li>' + 'Rental ' + rentalId + ' ====> User: ' + rental.userid + ' rented movie(s): ' + rental.movieid + '</li>';
-            rentalId++;
+            html += '<li>' + 'Rental ' + rental.rentalid + ' ====> User: ' + rental.userid
+                + ', rented movie: ' + rental.movie.title + ' (' + 'Movie ID ' + rental.movieid + ')' + '</li>';
         }
 
         html += "</ul>";
@@ -90,44 +89,34 @@ function returnMovie(rentals) {
 
         if (input && isNaN(input) === false) {
 
-            // do a callback for getting the movieid of the rental that is going to be deleted
+            // do a callback for getting the movieid and the movie of the rental that is going to be deleted
             axios
                 .get("/api/rental/" + input)
                 .then(response => response.data)
                 .then(rental => {
                     console.log("selected rental", rental);
                     const movieid = rental.movieid;
+                    const movie = rental.movie;
 
-                    // this callback gets the movie by the movieid
+                    // this callback sets the movie as available again
                     axios
-                        .get("/api/movies/" + movieid)
+                        .put("/api/movies/available/" + movieid, movie)
                         .then(response => response.data)
-                        .then(movie => {
-
-                            // this callback sets the movie as available again
-                            axios
-                                .put("/api/movies/available/" + movieid, movie)
-                                .then(response => response.data)
-                                .then(returnedMovie => {
-                                    console.log("returned movie", returnedMovie);
-                                })
-                                .catch(error => console.error("Error returning movie!", error));
-
+                        .then(returnedMovie => {
+                            console.log("returned movie", returnedMovie);
                         })
-                        .catch(error => {
-                            console.log("AJAX request finished with an error :(");
-                            console.error(error);
-                        });
+                        .catch(error => console.error("Error returning movie!", error));
 
                     // and finally this one deletes the rental
                     axios
                         .delete("/api/rental/" + input)
                         .then(response => response.data)
                         .then(deletedRental => {
-                            loadAndDisplayRentals();
                             console.log("deleted rental");
                         })
-                        .catch(error => console.error("Error deleting rental!", error))
+                        .catch(error => console.error("Error deleting rental!", error));
+
+                    loadAndDisplayRentals();
 
                 })
                 .catch(error => console.error("Error showing rental!", error));
@@ -137,6 +126,7 @@ function returnMovie(rentals) {
             document.querySelector(".returninput").style.display = "none";
             document.querySelector(".returnokbutton").style.display = "none";
             document.querySelector(".returnbackbutton").style.display = "none";
+            returnmoviebutton.style.display = "initial";
 
         } else {
 

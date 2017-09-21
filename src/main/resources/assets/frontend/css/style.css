@@ -73,10 +73,12 @@ h1 {
 }
 
 .rentbackbutton {
+    margin-top: 15px;
     display: none;
 }
 
 .okbutton {
+    margin-top: 15px;
     display: none;
 }
 
@@ -85,10 +87,12 @@ h1 {
 }
 
 .returnbackbutton {
+    margin-top: 15px;
     display: none;
 }
 
 .returnokbutton {
+    margin-top: 15px;
     display: none;
 }
 

@@ -3,7 +3,6 @@ package com.zarebcn.api.movies.controller;
 
 import com.zarebcn.api.movies.model.Rental;
 import com.zarebcn.api.movies.service.RentalService;
-import com.zarebcn.api.movies.service.UserService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -37,8 +36,8 @@ public class RentalApi {
 
     @DELETE
     @Path("{id}")
-    public Collection<Rental> returnMovie(@PathParam("id") int id) {
-        return rentalService.returnMovie(id);
+    public void returnMovie(@PathParam("id") int id) {
+        rentalService.returnMovie(id);
     }
 
 }
