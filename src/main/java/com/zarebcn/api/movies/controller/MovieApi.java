@@ -53,5 +53,19 @@ public class MovieApi {
         return movieService.editMovie(id, movie);
     }
 
+    @PUT
+    @Path("/rented/{id}")
+    public Movie setRented(@PathParam("id") int id, Movie movie) {
+
+        return movieService.setRented(id, movie);
+    }
+
+    @PUT
+    @Path("/available/{id}")
+    public Movie setAvailable(@PathParam("id") int id, Movie movie) {
+
+        return movieService.setAvailable(id, movie);
+    }
+
 }
 

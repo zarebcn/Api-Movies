@@ -6,7 +6,6 @@ body {
     margin: 20px;
     font-size: 20px;
     font-family: Arial, sans-serif;
-    color: #333;
 }
 
 h1 {
@@ -63,4 +62,36 @@ h2 {
 
 h1 {
     margin: 15px;
+}
+
+.available {
+    color: green;
+}
+
+.rented {
+    color: red;
+}
+
+.rentbackbutton {
+    display: none;
+}
+
+.okbutton {
+    display: none;
+}
+
+.rentinput {
+    display: none;
+}
+
+.returnbackbutton {
+    display: none;
+}
+
+.returnokbutton {
+    display: none;
+}
+
+.returninput {
+    display: none;
 }

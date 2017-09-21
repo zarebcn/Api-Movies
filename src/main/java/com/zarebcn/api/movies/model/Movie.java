@@ -7,17 +7,19 @@ public class Movie {
     private String director;
     private String cover;
     private int year;
+    private boolean available;
 
     public Movie() {
         //dropwizard constructor for POST
     }
 
-    public Movie(int id, String title, String director, String cover, int year) {
+    public Movie(int id, String title, String director, String cover, int year, boolean available) {
         this.id = id;
         this.title = title;
         this.director = director;
         this.cover = cover;
         this.year = year;
+        this.available = available;
     }
 
 
@@ -64,6 +66,14 @@ public class Movie {
 
     public void setCover(String cover) {
         this.cover = cover;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public boolean isAvailable() {
+        return available;
     }
 }
 

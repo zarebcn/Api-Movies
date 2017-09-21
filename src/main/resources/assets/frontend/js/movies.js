@@ -11,6 +11,7 @@ function loadAndDisplayMovies() {
         deleteMovie();
         editAndUpdateMovie();
         exitEditMode();
+        viewRentals();
     });
 }
 
@@ -101,6 +102,8 @@ function deleteMovie() {
 /** Edits a movie info and updates it when clicking the update button */
 function editAndUpdateMovie() {
 
+    let editButtons = $('.editbutton');
+
     $('.editbutton').click(function() {
 
         let movieid = $(this).val();
@@ -124,7 +127,6 @@ function editAndUpdateMovie() {
             cover: $('#cover').val()
         };
 
-        let title = document.getElementById("title").value;
         let director = document.getElementById("director").value;
         let year = document.getElementById("year").value;
         let cover = document.getElementById("cover").value;
@@ -170,4 +172,14 @@ function clearInputs() {
     document.getElementById("director").value = "";
     document.getElementById("year").value = "";
     document.getElementById("cover").value = "";
+}
+
+/** Redirects to rental page when clicking on button */
+function viewRentals() {
+
+   let rentalButton = document.getElementById("rental");
+
+   rentalButton.onclick = function() {
+       location.href = "http://localhost:8080/Rental.html";
+   }
 }
