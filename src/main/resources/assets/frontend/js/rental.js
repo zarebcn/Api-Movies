@@ -113,10 +113,9 @@ function returnMovie(rentals) {
                         .then(response => response.data)
                         .then(deletedRental => {
                             console.log("deleted rental");
+                            loadAndDisplayRentals();
                         })
                         .catch(error => console.error("Error deleting rental!", error));
-
-                    loadAndDisplayRentals();
 
                 })
                 .catch(error => console.error("Error showing rental!", error));
