@@ -42,8 +42,8 @@ function displayRentals(rentals) {
 
         for (const rental of rentals) {
 
-            html += '<li>' + 'Rental ' + rental.rentalid + ' ====> User: ' + rental.userid
-                + ', rented movie: ' + rental.movie.title + ' (' + 'Movie ID ' + rental.movieid + ')' + '</li>';
+            html += '<li>' + 'Rental ' + rental.rentalId + ' ====> User: ' + rental.user.id
+                + ', rented movie: ' + rental.movie.title + ' (' + 'Movie ID ' + rental.movie.id + ')' + '</li>';
         }
 
         html += "</ul>";
@@ -95,18 +95,18 @@ function returnMovie(rentals) {
 
         if (input && isNaN(input) === false) {
 
-            // do a callback for getting the movieid and the movie of the rental that is going to be deleted
+            // does a callback for getting the movieid and the movie of the rental that is going to be deleted
             axios
                 .get("/api/rental/" + input)
                 .then(response => response.data)
                 .then(rental => {
                     console.log("selected rental", rental);
-                    const movieid = rental.movieid;
-                    const movie = rental.movie;
+                    const movieId = rental.movie.id;
+                    //const movie = rental.movie;
 
                     // this callback sets the movie as available again
                     axios
-                        .put("/api/movies/available/" + movieid, movie)
+                        .put("/api/movies/available/" + movieId)
                         .then(response => response.data)
                         .then(returnedMovie => {
                             console.log("returned movie", returnedMovie);
@@ -131,6 +131,7 @@ function returnMovie(rentals) {
             document.querySelector(".returninput").style.display = "none";
             document.querySelector(".returnokbutton").style.display = "none";
             document.querySelector(".returnbackbutton").style.display = "none";
+            document.querySelector(".userrentals").style.display = "initial";
             returnmoviebutton.style.display = "initial";
 
         } else {
@@ -140,13 +141,14 @@ function returnMovie(rentals) {
     });
 }
 
+/** Show the rentals of the selected user */
 function viewRentalsById(rentals) {
 
     if (rentals.length === 0) {
+
         document.querySelector(".userrentals").style.display = "none";
     }
 
-    /** Show the rentals of the selected user */
     $('.userrentals').click(function() {
 
         document.querySelector(".userinput").style.display = "initial";
@@ -164,6 +166,7 @@ function viewRentalsById(rentals) {
     $('.userokbutton').click(function() {
 
         const userInput = parseInt(document.querySelector(".userinput").value);
+
         document.querySelector(".returnmoviebutton").style.display = "initial";
         document.querySelector(".userinput").value = "";
         document.querySelector(".userinput").style.display = "none";

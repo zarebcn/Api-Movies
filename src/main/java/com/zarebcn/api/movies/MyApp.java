@@ -4,6 +4,7 @@ import com.zarebcn.api.movies.controller.MovieApi;
 import com.zarebcn.api.movies.controller.RentalApi;
 import com.zarebcn.api.movies.service.MovieService;
 import com.zarebcn.api.movies.service.RentalService;
+import com.zarebcn.api.movies.service.UserService;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -31,8 +32,9 @@ public class MyApp extends Application<MyAppConfig> {
     @Override
     public void run(MyAppConfig config, Environment env) throws Exception {
 
+        UserService userService = new UserService();
         MovieService movieService = new MovieService();
-        RentalService rentalService = new RentalService();
+        RentalService rentalService = new RentalService(userService);
 
         env.jersey().register(new MovieApi(movieService));
         env.jersey().register(new RentalApi(rentalService));

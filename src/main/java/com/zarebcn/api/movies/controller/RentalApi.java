@@ -1,7 +1,6 @@
 package com.zarebcn.api.movies.controller;
 
 
-import com.zarebcn.api.movies.model.Movie;
 import com.zarebcn.api.movies.model.Rental;
 import com.zarebcn.api.movies.service.RentalService;
 

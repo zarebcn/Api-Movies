@@ -55,16 +55,16 @@ public class MovieApi {
 
     @PUT
     @Path("/rented/{id}")
-    public Movie setRented(@PathParam("id") int id, Movie movie) {
+    public Movie setRented(@PathParam("id") int id) {
 
-        return movieService.setRented(id, movie);
+        return movieService.setRented(id);
     }
 
     @PUT
     @Path("/available/{id}")
-    public Movie setAvailable(@PathParam("id") int id, Movie movie) {
+    public Movie setAvailable(@PathParam("id") int id) {
 
-        return movieService.setAvailable(id, movie);
+        return movieService.setAvailable(id);
     }
 
 }

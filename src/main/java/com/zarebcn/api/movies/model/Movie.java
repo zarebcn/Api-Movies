@@ -7,19 +7,22 @@ public class Movie {
     private String director;
     private String cover;
     private int year;
-    private boolean available;
+    private int copies;
+    private int availableCopies;
 
     public Movie() {
         //dropwizard constructor for POST
     }
 
-    public Movie(int id, String title, String director, String cover, int year, boolean available) {
+    public Movie(int id, String title, String director, String cover, int year, int copies) {
+
         this.id = id;
         this.title = title;
         this.director = director;
         this.cover = cover;
         this.year = year;
-        this.available = available;
+        this.copies = copies;
+        availableCopies = copies;
     }
 
 
@@ -31,8 +34,16 @@ public class Movie {
         this.id = id;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getTitle() {
         return title;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
     }
 
     public String getDirector() {
@@ -41,19 +52,6 @@ public class Movie {
 
     public int getYear() {
         return year;
-    }
-
-    @Override
-    public String toString() {
-        return title + " by " + director + " (" + year + ")";
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    
-    public void setDirector(String director) {
-        this.director = director;
     }
 
     public void setYear(int year) {
@@ -68,12 +66,25 @@ public class Movie {
         this.cover = cover;
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public int getCopies() {
+        return copies;
     }
 
-    public boolean isAvailable() {
-        return available;
+    public void setCopies(int copies) {
+        this.copies = copies;
+    }
+
+    public void setAvailableCopies(int availableCopies) {
+        this.availableCopies = availableCopies;
+    }
+
+    public int getAvailableCopies() {
+        return availableCopies;
+    }
+
+    @Override
+    public String toString() {
+        return title + " by " + director + " (" + year + ")";
     }
 }
 

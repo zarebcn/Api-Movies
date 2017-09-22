@@ -7,7 +7,7 @@ loadAndDisplayMovies();
 function loadAndDisplayMovies() {
 
     loadMovies().then(movies => {
-        console.log(movies)
+        console.log(movies);
         displayMovies(movies);
         deleteMovie();
         editAndUpdateMovie();
@@ -27,16 +27,18 @@ function setupMovieForm() {
             title: $('#title').val(),
             director: $('#director').val(),
             year: parseInt($('#year').val()),
-            cover: $('#cover').val()
+            cover: $('#cover').val(),
+            copies: parseInt($('#copies').val())
         };
 
         let title = document.getElementById("title").value;
         let director = document.getElementById("director").value;
         let year = document.getElementById("year").value;
         let cover = document.getElementById("cover").value;
+        let copies = document.getElementById("copies").value;
 
-        if ($('#title').val() && $('#director').val() && $('#year').val() && $('#cover')
-            && isNaN(director) === true && isNaN(cover) === true && isNaN(year) === false) {
+        if ($('#title').val() && $('#director').val() && $('#year').val() && $('#cover') && $('#copies')
+            && isNaN(director) === true && isNaN(cover) === true && isNaN(year) === false && isNaN(copies) === false) {
 
             axios
                 .post(apiMoviesUrl, movie)
@@ -93,7 +95,7 @@ function deleteMovie() {
             .then(response => response.data)
             .then(movie => {
 
-                if (movie.available) {
+                if (movie.availableCopies === movie.copies) {
 
                     axios
                         .delete(apiMoviesUrl + movieid)
@@ -123,7 +125,7 @@ function editAndUpdateMovie() {
             .then(response => response.data)
             .then(movie => {
 
-                if (movie.available) {
+                if (movie.availableCopies === movie.copies) {
 
                     let updateButton = document.querySelector(".updatebutton");
                     updateButton.style.display = "initial";
@@ -141,15 +143,17 @@ function editAndUpdateMovie() {
                         title: $('#title').val(),
                         director: $('#director').val(),
                         year: parseInt($('#year').val()),
-                        cover: $('#cover').val()
+                        cover: $('#cover').val(),
+                        copies: $('#copies').val()
                     };
 
                     let director = document.getElementById("director").value;
                     let year = document.getElementById("year").value;
                     let cover = document.getElementById("cover").value;
+                    let copies = document.getElementById("copies").value;
 
-                    if ($('#title').val() && $('#director').val() && $('#year').val() && $('#cover')
-                        && isNaN(director) === true && isNaN(cover) === true && isNaN(year) === false) {
+                    if ($('#title').val() && $('#director').val() && $('#year').val() && $('#cover') && $('#copies')
+                        && isNaN(director) === true && isNaN(cover) === true && isNaN(year) === false && isNaN(copies) === false) {
 
                         axios
                             .put(apiMoviesUrl + movieid, movie)
@@ -194,6 +198,7 @@ function clearInputs() {
     document.getElementById("director").value = "";
     document.getElementById("year").value = "";
     document.getElementById("cover").value = "";
+    document.getElementById("copies").value = "";
 }
 
 /** Redirects to rental page when clicking on button */

@@ -1,57 +1,49 @@
 package com.zarebcn.api.movies.model;
 
-import com.zarebcn.api.movies.service.MovieService;
-
 public class Rental {
 
-    private int movieid;
-    private int userid;
+   // private int userid;
     private Movie movie;
-    private int rentalid;
+    private int rentalId;
+    private User user;
 
    public Rental() {
 
    }
 
-    public Rental(int movieid, int userid, Movie movie, int rentalid) {
-        this.rentalid = rentalid;
-        this.movieid = movieid;
-        this.userid = userid;
-        //MovieService movieService = new MovieService();
-        //this.movie = movieService.getById(movieid);
+    public Rental(User user, Movie movie, int rentalId) {
+
+        this.rentalId = rentalId;
         this.movie = movie;
+        this.user = user;
     }
 
-    public void setMovieid(int movieid) {
-        this.movieid = movieid;
-    }
-
-    public int getMovieid() {
-        return movieid;
-    }
-
-    public void setUserid(int userid) {
-        this.userid = userid;
-    }
-
-    public int getUserid() {
-        return userid;
+    public int getMovieId() {
+        return movie.getId();
     }
 
     public Movie getMovie() {
        return movie;
     }
 
-    public void setRentalid(int rentalid) {
-        this.rentalid = rentalid;
+    public void setRentalId(int rentalid) {
+        this.rentalId = rentalid;
     }
 
-    public int getRentalid() {
-        return rentalid;
+    public int getRentalId() {
+        return rentalId;
     }
 
     @Override
     public String toString() {
-        return "movie: " + movieid + " is rented by user: " + userid;
+        return "movie: " + movie.getId() + " is rented by user: " + user.getId();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public int getUserId() {
+        return user.getId();
     }
 }

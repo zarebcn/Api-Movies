@@ -43,10 +43,11 @@ function getIdFromUrl() {
 
 function displayMovie(movie) {
 
-    var availableText;
+    let availableText;
 
-    if (movie.available === true) {
-        availableText = '<p class=available>Available</p>';
+    if (movie.availableCopies > 0) {
+        availableText = '<p class=available>Available</p>' + '<p>' + movie.availableCopies + '/'
+            +  movie.copies + ' available(s)' + '</p>';
     } else {
         availableText = '<p class=rented>Rented</p>';
     }
@@ -72,7 +73,7 @@ function rentMovie(movie) {
 
     let rentButton = document.querySelector(".rentbutton");
 
-    if (!movie.available) {
+    if (movie.availableCopies === 0) {
         rentButton.style.display = "none";
     }
 
@@ -95,28 +96,31 @@ function rentMovie(movie) {
         rentButton.style.display = "initial";
     }
 
-
-
     $(".okbutton").click(function () {
 
         const input = parseInt(document.querySelector(".rentinput").value);
 
+        const user = {
+            id: input
+        }
+
         const rental = {
-            movieid: getIdFromUrl(),
-            userid: input,
+            user: user,
             movie: movie
         };
 
         if (input && isNaN(input) === false) {
 
+            // sets the movie as rented
             axios
-                .put("/api/movies/rented/" + getIdFromUrl(), movie)
+                .put("/api/movies/rented/" + getIdFromUrl())
                 .then(response => response.data)
                 .then(rentedMovie => {
                     console.log("rented movie", rentedMovie);
                 })
                 .catch(error => console.error("Error renting movie!", error));
 
+            // creates a rental
             axios
                 .post("/api/rental/", rental)
                 .then(response => response.data)
@@ -130,6 +134,7 @@ function rentMovie(movie) {
             document.querySelector(".rentinput").style.display = "none";
             document.querySelector(".okbutton").style.display = "none";
             document.querySelector(".rentbackbutton").style.display = "none";
+            rentButton.style.display = "initial";
 
         } else {
 
