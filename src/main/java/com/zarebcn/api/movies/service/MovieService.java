@@ -52,6 +52,7 @@ public class MovieService {
     public Movie addMovie(Movie movie) {
 
         movie.setId(nextId);
+        movie.setAvailableCopies(movie.getCopies());
         movies.put(nextId, movie);
         nextId++;
 
@@ -66,6 +67,7 @@ public class MovieService {
     public Movie editMovie(int id, Movie movie) {
 
         movie.setId(id);
+        movie.setAvailableCopies(movie.getCopies());
         movies.put(id, movie);
 
         return getById(id);

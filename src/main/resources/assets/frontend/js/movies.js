@@ -95,7 +95,7 @@ function deleteMovie() {
             .then(response => response.data)
             .then(movie => {
 
-                if (movie.availableCopies === movie.copies) {
+                if (movie.copies === movie.availableCopies) {
 
                     axios
                         .delete(apiMoviesUrl + movieid)
@@ -125,7 +125,7 @@ function editAndUpdateMovie() {
             .then(response => response.data)
             .then(movie => {
 
-                if (movie.availableCopies === movie.copies) {
+                if (movie.copies === movie.availableCopies) {
 
                     let updateButton = document.querySelector(".updatebutton");
                     updateButton.style.display = "initial";

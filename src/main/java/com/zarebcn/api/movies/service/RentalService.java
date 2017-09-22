@@ -52,10 +52,6 @@ public class RentalService {
     public Rental createRental(Rental rental) {
 
         rental.setRentalId(nextId);
-        //nuevo
-       /* if (userService.getUserId(rental.getUserId()) != rental.getUserId()) {
-            return null;
-        }*/
 
         rentals.put(nextId, rental);
         nextId++;

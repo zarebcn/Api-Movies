@@ -74,7 +74,7 @@ function returnMovie(rentals) {
         document.querySelector(".userrentals").style.display = "none";
         document.querySelector(".userbackbutton").style.display = "none";
         returnmoviebutton.style.display = "none";
-    }
+    };
 
     let returnbackbutton = document.querySelector(".returnbackbutton");
 
@@ -87,7 +87,7 @@ function returnMovie(rentals) {
         document.querySelector(".userrentals").style.display = "initial";
         returnmoviebutton.style.display = "initial";
         loadAndDisplayRentals();
-    }
+    };
 
     $(".returnokbutton").click(function () {
 
