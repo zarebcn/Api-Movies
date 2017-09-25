@@ -34,7 +34,7 @@ public class MyApp extends Application<MyAppConfig> {
 
         UserService userService = new UserService();
         MovieService movieService = new MovieService();
-        RentalService rentalService = new RentalService(userService);
+        RentalService rentalService = new RentalService(userService, movieService);
 
         env.jersey().register(new MovieApi(movieService));
         env.jersey().register(new RentalApi(rentalService));

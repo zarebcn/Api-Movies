@@ -41,31 +41,16 @@ public class MovieApi {
 
     @DELETE
     @Path("{id}")
-    public void deleteMovie(@PathParam("id") int id) {
+    public String deleteMovie(@PathParam("id") int id) {
 
-        movieService.deleteMovie(id);
+       return movieService.deleteMovie(id);
     }
 
     @PUT
     @Path("{id}")
-    public Movie editMovie(@PathParam("id") int id, Movie movie) {
+    public String editMovie(@PathParam("id") int id, Movie movie) {
 
         return movieService.editMovie(id, movie);
     }
-
-    @PUT
-    @Path("/rented/{id}")
-    public Movie setRented(@PathParam("id") int id) {
-
-        return movieService.setRented(id);
-    }
-
-    @PUT
-    @Path("/available/{id}")
-    public Movie setAvailable(@PathParam("id") int id) {
-
-        return movieService.setAvailable(id);
-    }
-
 }
 

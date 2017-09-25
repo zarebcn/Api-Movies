@@ -1,5 +1,6 @@
 package com.zarebcn.api.movies.service;
 
+import com.zarebcn.api.movies.model.Movie;
 import com.zarebcn.api.movies.model.Rental;
 
 import java.util.*;
@@ -10,11 +11,13 @@ public class RentalService {
     private int nextId;
     //nuevo
     private UserService userService;
+    private MovieService movieService;
 
-    public RentalService(UserService userService) {
+    public RentalService(UserService userService, MovieService movieService) {
 
         rentals = new HashMap<>();
         this.userService = userService;
+        this.movieService = movieService;
         nextId = 1;
     }
 
@@ -49,7 +52,9 @@ public class RentalService {
         return rentals.get(id);
     }
 
-    public Rental createRental(Rental rental) {
+    public Rental createRental(int id, Rental rental) {
+
+        movieService.rentMovie(id);
 
         rental.setRentalId(nextId);
 
@@ -59,6 +64,9 @@ public class RentalService {
     }
 
     public void returnMovie(int rentalId) {
+
+        int movieId = rentals.get(rentalId).getMovieId();
+        movieService.returnMovie(movieId);
 
         rentals.remove(rentalId);
     }

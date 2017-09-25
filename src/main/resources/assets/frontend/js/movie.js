@@ -99,6 +99,7 @@ function rentMovie(movie) {
     $(".okbutton").click(function () {
 
         const input = parseInt(document.querySelector(".rentinput").value);
+        const date = new Date();
 
         const user = {
             id: input
@@ -106,25 +107,18 @@ function rentMovie(movie) {
 
         const rental = {
             user: user,
-            movie: movie
+            movie: movie,
+            rentalDate: date
         };
 
-        if (input && isNaN(input) === false) {
+        if (input && !isNaN(input)) {
 
-            // sets the movie as rented
+            // creates a rental and sets one of the available copies as rented
             axios
-                .put("/api/movies/rented/" + getIdFromUrl())
-                .then(response => response.data)
-                .then(rentedMovie => {
-                    console.log("rented movie", rentedMovie);
-                })
-                .catch(error => console.error("Error renting movie!", error));
-
-            // creates a rental
-            axios
-                .post("/api/rental/", rental)
+                .post("/api/rental/" + movie.id, rental)
                 .then(response => response.data)
                 .then(createdRental => {
+                    console.log("Rented movie", movie)
                     console.log("created rental", createdRental);
                     loadAndDisplayMovie(); // to refresh list
                 })

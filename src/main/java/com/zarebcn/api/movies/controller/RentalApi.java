@@ -37,8 +37,9 @@ public class RentalApi {
     }
 
     @POST
-    public Rental createRental(Rental rental) {
-        return rentalService.createRental(rental);
+    @Path("{id}")
+    public Rental createRental(@PathParam("id") int id, Rental rental) {
+        return rentalService.createRental(id, rental);
     }
 
     @DELETE

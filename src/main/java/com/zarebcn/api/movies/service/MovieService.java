@@ -59,36 +59,47 @@ public class MovieService {
         return movie;
     }
 
-    public void deleteMovie(int id) {
+    public String deleteMovie(int id) {
 
-        movies.remove(id);
+        if (movies.get(id).getCopies() == movies.get(id).getAvailableCopies()) {
+
+            movies.remove(id);
+            return "Deleted movie";
+
+        } else {
+
+            return "This movie is actually rented and cant be deleted";
+        }
     }
 
-    public Movie editMovie(int id, Movie movie) {
+    public String editMovie(int id, Movie movie) {
 
-        movie.setId(id);
-        movie.setAvailableCopies(movie.getCopies());
+        if (movies.get(id).getCopies() == movies.get(id).getAvailableCopies()) {
+
+            movie.setId(id);
+            movie.setAvailableCopies(movie.getCopies());
+            movies.put(id, movie);
+
+            return "Movie edited";
+
+        } else {
+
+            return "This movie is actually rented and cant be edited";
+        }
+    }
+
+    public void rentMovie(int id) {
+
+        Movie movie = movies.get(id);
+        movie.setAvailableCopies(movie.getAvailableCopies() - 1);
         movies.put(id, movie);
-
-        return getById(id);
     }
 
-    public Movie setRented(int id) {
-
-       Movie movie = movies.get(id);
-       movie.setAvailableCopies(movie.getAvailableCopies() - 1);
-       movies.put(id, movie);
-
-       return getById(id);
-    }
-
-    public Movie setAvailable(int id) {
+    public void returnMovie(int id) {
 
         Movie movie = movies.get(id);
         movie.setAvailableCopies(movie.getAvailableCopies() + 1);
         movies.put(id, movie);
-
-        return getById(id);
     }
 }
 

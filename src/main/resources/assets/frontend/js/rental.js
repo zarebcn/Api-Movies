@@ -7,7 +7,6 @@ loadAndDisplayRentals();
 function loadAndDisplayRentals() {
 
     loadRentals().then(rentals => {
-        console.log(rentals);
         displayRentals(rentals);
         returnMovie(rentals);
         viewRentalsById(rentals);
@@ -42,8 +41,13 @@ function displayRentals(rentals) {
 
         for (const rental of rentals) {
 
+            let date = new Date(rental.rentalDate);
+            let rentalDateFormatted = date.getDate() + "-" + (date.getMonth()+1)
+                + "-" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes();
+
             html += '<li>' + 'Rental ' + rental.rentalId + ' ====> User: ' + rental.user.id
-                + ', rented movie: ' + rental.movie.title + ' (' + 'Movie ID ' + rental.movie.id + ')' + '</li>';
+                + ', rented movie: ' + rental.movie.title + ' (' + 'Movie ID ' + rental.movie.id
+                + ')' + ', ' + rentalDateFormatted + '</li>';
         }
 
         html += "</ul>";
@@ -95,36 +99,19 @@ function returnMovie(rentals) {
 
         if (input && isNaN(input) === false) {
 
-            // does a callback for getting the movieid and the movie of the rental that is going to be deleted
+            // this callback returns the movie and deletes the rental
             axios
-                .get("/api/rental/" + input)
+                .delete("/api/rental/" + input)
                 .then(response => response.data)
-                .then(rental => {
-                    console.log("selected rental", rental);
-                    const movieId = rental.movie.id;
-                    //const movie = rental.movie;
+                .then(deletedRental => {
+                    let returnMovieDate = new Date();
+                    let returnMovieDateFormatted = returnMovieDate.getDate() + "-" + (returnMovieDate.getMonth()+1)
+                        + "-" + returnMovieDate.getFullYear() + " " + returnMovieDate.getHours() + ":" + returnMovieDate.getMinutes();
 
-                    // this callback sets the movie as available again
-                    axios
-                        .put("/api/movies/available/" + movieId)
-                        .then(response => response.data)
-                        .then(returnedMovie => {
-                            console.log("returned movie", returnedMovie);
-                        })
-                        .catch(error => console.error("Error returning movie!", error));
-
-                    // and finally this one deletes the rental
-                    axios
-                        .delete("/api/rental/" + input)
-                        .then(response => response.data)
-                        .then(deletedRental => {
-                            console.log("deleted rental");
-                            loadAndDisplayRentals();
-                        })
-                        .catch(error => console.error("Error deleting rental!", error));
-
+                    console.log("returned movie and deleted rental", returnMovieDateFormatted);
+                    loadAndDisplayRentals();
                 })
-                .catch(error => console.error("Error showing rental!", error));
+                .catch(error => console.error("Error deleting rental!", error));
 
 
             document.querySelector(".returninput").value = "";
