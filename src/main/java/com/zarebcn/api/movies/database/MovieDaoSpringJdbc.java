@@ -32,11 +32,11 @@ public class MovieDaoSpringJdbc implements MovieDao{
                 String title = rs.getString("title");
                 String director = rs.getString("director");
                 String cover = rs.getString("cover");
-                int year = rs.getInt("year");
+                int year = rs.getInt("release_date");
                 int copies = rs.getInt("copies");
                 int availableCopies = rs.getInt("available_copies");
 
-                return new Movie(id, title, director, cover, year, copies);
+                return new Movie(id, title, director, cover, year, copies, availableCopies);
             }
         };
     }
@@ -65,7 +65,7 @@ public class MovieDaoSpringJdbc implements MovieDao{
     public Movie addMovie(Movie movie) {
 
         Object[] args = { movie.getTitle(), movie.getDirector(), movie.getCover(), movie.getYear(), movie.getCopies(), movie.getCopies() };
-        jdbcTemplate.update("insert into movies (title, director, cover, year, copies, available_copies) values (?, ?, ?, ?, ?, ?)", args);
+        jdbcTemplate.update("insert into movies (title, director, cover, release_date, copies, available_copies) values (?, ?, ?, ?, ?, ?)", args);
 
         // TODO: get ID of created book
         // book.setId(id);
@@ -81,8 +81,8 @@ public class MovieDaoSpringJdbc implements MovieDao{
 
         if (peli.getCopies() == peli.getAvailableCopies()) {
 
-            Object[] args = { movie.getTitle(), movie.getDirector(), movie.getCover(), movie.getYear(), movie.getCopies(), id };
-            jdbcTemplate.update("update movies set title = ?, director = ?, cover = ?, year = ?, copies = ? where id = ?", args);
+            Object[] args = { movie.getTitle(), movie.getDirector(), movie.getCover(), movie.getYear(), movie.getCopies(), movie.getCopies(), id };
+            jdbcTemplate.update("update movies set title = ?, director = ?, cover = ?, release_date = ?, copies = ?, available_copies = ? where id = ?", args);
             return "Movie edited";
         } else {
 

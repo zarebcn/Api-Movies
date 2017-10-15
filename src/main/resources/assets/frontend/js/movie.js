@@ -118,7 +118,7 @@ function rentMovie(movie) {
                 .post("/api/rental/" + movie.id, rental)
                 .then(response => response.data)
                 .then(createdRental => {
-                    console.log("Rented movie", movie)
+                    console.log("Rented movie", movie);
                     console.log("created rental", createdRental);
                     loadAndDisplayMovie(); // to refresh list
                 })

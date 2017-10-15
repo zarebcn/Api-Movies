@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class MovieServiceOld {
 
-    private Map<Integer, Movie> movies;
+   /* private Map<Integer, Movie> movies;
     private int nextId;
 
     public MovieServiceOld() {
@@ -100,6 +100,6 @@ public class MovieServiceOld {
         Movie movie = movies.get(id);
         movie.setAvailableCopies(movie.getAvailableCopies() + 1);
         movies.put(id, movie);
-    }
+    }*/
 }
 

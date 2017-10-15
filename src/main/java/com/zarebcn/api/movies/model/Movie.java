@@ -14,7 +14,7 @@ public class Movie {
         //dropwizard constructor for POST
     }
 
-    public Movie(int id, String title, String director, String cover, int year, int copies) {
+    public Movie(int id, String title, String director, String cover, int year, int copies, int availableCopies) {
 
         this.id = id;
         this.title = title;
@@ -22,7 +22,7 @@ public class Movie {
         this.cover = cover;
         this.year = year;
         this.copies = copies;
-        availableCopies = copies;
+        this.availableCopies = availableCopies;
     }
 
 
