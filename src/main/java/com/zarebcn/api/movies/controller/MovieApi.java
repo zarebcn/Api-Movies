@@ -21,7 +21,14 @@ public class MovieApi {
     @GET
     public Collection<Movie> viewMovies(@QueryParam("search") String search) {
 
-        return movieService.findByTitle(search);
+        //nuevo
+        if (search != null) {
+            return movieService.findByTitle(search);
+        } else {
+            return movieService.getAll();
+        }
+
+        //return movieService.findByTitle(search);
     }
 
     @GET
@@ -36,21 +43,21 @@ public class MovieApi {
 
         System.out.println("Received book: " + movie);
 
-        return movieService.addMovie(movie);
+        return movieService.add(movie);
     }
 
     @DELETE
     @Path("{id}")
     public String deleteMovie(@PathParam("id") int id) {
 
-       return movieService.deleteMovie(id);
+       return movieService.delete(id);
     }
 
     @PUT
     @Path("{id}")
     public String editMovie(@PathParam("id") int id, Movie movie) {
 
-        return movieService.editMovie(id, movie);
+        return movieService.edit(id, movie);
     }
 }
 

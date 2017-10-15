@@ -1,6 +1,5 @@
 package com.zarebcn.api.movies.service;
 
-import com.zarebcn.api.movies.model.Movie;
 import com.zarebcn.api.movies.model.Rental;
 
 import java.util.*;
